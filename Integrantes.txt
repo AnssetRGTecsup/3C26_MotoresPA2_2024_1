@@ -1,0 +1,7 @@
+Integrantes:
+- Carrollo Pariona Harvy Ariel
+- Mendoza Taipe María Teresa
+- Torres Huerta Alonso Eduardo
+- Villanueva Alejo Miguel Angel
+Titulo de juego: Bloques de ritmo
+Descripción:  El juego consiste en la generación de fechas que caeran desde arriba, estas se eliminarán cada que el jugador pulse sobre la fecha indicada  
