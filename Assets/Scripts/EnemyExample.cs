@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum Direction { UP, DOWN, LEFT, RIGHT }
 
@@ -63,5 +64,6 @@ public class EnemyExample : MonoBehaviour
     {
         Destroy(gameObject);
         _gameData.EnemyQuant--;
+        SceneManager.LoadScene("GameOver");
     }
 }
