@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Tempo", menuName = "ScriptableObjects/RhythmSystem/Tempo")]
 public class RhythmTempo : ScriptableObject
 {
-    [SerializeField] private float beatTime;
+    public float beatTime;
 
     public float BeatTime => beatTime;
 

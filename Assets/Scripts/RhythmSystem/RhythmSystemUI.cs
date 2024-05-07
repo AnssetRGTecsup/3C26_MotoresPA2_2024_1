@@ -20,7 +20,6 @@ public class RhythmSystemUI : MonoBehaviour
     [SerializeField] private Color endColor;
     [SerializeField] private float colorOffset = 0.55f;
 
-
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip audioClip;
 
