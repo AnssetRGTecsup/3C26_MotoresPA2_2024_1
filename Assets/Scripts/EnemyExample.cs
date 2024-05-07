@@ -1,75 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
-public enum Direction { UP, DOWN, LEFT, RIGHT }
 
 public class EnemyExample : MonoBehaviour
 {
-    [SerializeField] RhythmTempo beatTempo;
+    [SerializeField] int velocidad;
+    [SerializeField] bool Gano;
+    [SerializeField] int Puntaje;
+   
+     Vector2  _movementInput;
 
-    [Header("Smooth Translate Values")]
-    [SerializeField, Range(0f, 2f)] private float MoveTime = 0.25f;
-    [SerializeField] private float SmoothFactor = 1f;
 
-    private bool _canAct = true;
 
-    private void OnEnable()
+
+
+
+
+    public void OnTriggerEnter(Collider other)
     {
-        RhythmSystem.OnBeat += CallSmoothMovement;
-    }
+        if (other.CompareTag("Presa")) {
 
-    private void OnDisable()
-    {
-        RhythmSystem.OnBeat -= CallSmoothMovement;
-    }
+            Puntaje++;
 
-    private void CallSmoothMovement()
-    {
-        if (!_canAct) return;
-
-        StartCoroutine(SmoothMovement());
-    }
-
-    private IEnumerator SmoothMovement()
-    {
-        _canAct = false;
-
-        Vector3 startPosition = transform.position;
-        Vector3 endPosition = transform.position + Movement();
-
-        float _time = 0f;
-
-        while (_time < beatTempo.GetScaledBeatTime(MoveTime))
-        {
-            _time += Time.deltaTime;
-
-            transform.position = Vector3.Lerp(startPosition, endPosition, _time * SmoothFactor);
-
-            yield return null;
+            SceneManager.LoadScene("");
+          
         }
 
-        transform.position = endPosition;
 
-        _canAct = true;
     }
 
-    private Vector3 Movement()
+    public void OnMove(InputAction.CallbackContext context)
     {
-        Direction randomDirection = (Direction)Random.Range(0, 4);
-
-        switch (randomDirection)
-        {
-            case Direction.UP:
-                return Vector3.up;
-            case Direction.DOWN:
-                return Vector3.down;
-            case Direction.LEFT:
-                return Vector3.left;
-            case Direction.RIGHT:
-                return Vector3.right;
-        }
-
-        return Vector3.zero;
+        _movementInput = context.ReadValue<Vector2>();
     }
 }

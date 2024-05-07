@@ -8,6 +8,7 @@ public class RhythmSystem : MonoBehaviour
     [SerializeField] RhythmTempo beatTempo;
 
     public static event Action OnBeat;
+    public static event Action OnBeatstop;
     public static event Action<float> OnTimeIncrease;
 
     private float scaleTime = 0;
@@ -20,8 +21,8 @@ public class RhythmSystem : MonoBehaviour
     private IEnumerator RhythmCompas()
     {
         float _time = 0;
-
-        while(_time < beatTempo.BeatTime * 0.8f)
+        OnBeat?.Invoke();
+        while (_time < beatTempo.BeatTime * 0.8f)
         {
             _time += Time.deltaTime;
             scaleTime = _time;
@@ -33,7 +34,7 @@ public class RhythmSystem : MonoBehaviour
             OnTimeIncrease?.Invoke(ratio);
         }
 
-        OnBeat?.Invoke();
+        OnBeatstop?.Invoke();
 
         while (_time < beatTempo.BeatTime)
         {
