@@ -6,6 +6,7 @@ using UnityEngine.Audio;
 
 public class AudioSlider : MonoBehaviour
 {
+    public AudioMixer audioMixer;
     public Slider masterVolumeSlider;
     public Slider musicVolumeSlider;
     public Slider sfxVolumeSlider;
