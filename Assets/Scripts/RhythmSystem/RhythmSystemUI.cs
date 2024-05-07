@@ -39,6 +39,7 @@ public class RhythmSystemUI : MonoBehaviour
         RhythmSystem.OnTimeIncrease += MoveCompas;
         RhythmSystem.OnTimeIncrease += UpdateColor;
         RhythmSystem.OnBeat += CompasReached;
+        RhythmSystem.OnBeatstop += STO;
     }
 
     private void OnDisable()
@@ -47,6 +48,7 @@ public class RhythmSystemUI : MonoBehaviour
         RhythmSystem.OnTimeIncrease -= MoveCompas;
         RhythmSystem.OnTimeIncrease -= UpdateColor;
         RhythmSystem.OnBeat -= CompasReached;
+        RhythmSystem.OnBeatstop -= STO;
     }
 
     private void ScaleCompas(float value)
@@ -76,5 +78,9 @@ public class RhythmSystemUI : MonoBehaviour
     private void CompasReached()
     {
         audioSource.PlayOneShot(audioClip);
+    }
+    private void STO()
+    {
+        audioSource.Stop();
     }
 }
