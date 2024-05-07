@@ -6,15 +6,22 @@ using System;
 public class RhythmSystem : MonoBehaviour
 {
     [SerializeField] RhythmTempo beatTempo;
+    public GameData _gameData;
 
     public static event Action OnBeat;
     public static event Action<float> OnTimeIncrease;
 
     private float scaleTime = 0;
 
+    [SerializeField] private GameObject Enemy;
+
     private void Start()
     {
         StartCoroutine(RhythmCompas());
+    }
+    void OnDestroy()
+    {
+        _gameData.EnemyQuant = 0;
     }
 
     private IEnumerator RhythmCompas()
@@ -47,6 +54,18 @@ public class RhythmSystem : MonoBehaviour
             OnTimeIncrease?.Invoke(ratio);
         }
 
+        //Alonso
+        if(_gameData.EnemyQuant < 1)
+        {
+            CreateEnemy();
+        }
+        //Alonso
+
         StartCoroutine(RhythmCompas());
+    }
+    public void CreateEnemy()
+    {
+        Instantiate(Enemy);
+        _gameData.EnemyQuant++;
     }
 }

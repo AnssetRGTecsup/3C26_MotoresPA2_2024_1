@@ -7,54 +7,41 @@ public enum Direction { UP, DOWN, LEFT, RIGHT }
 public class EnemyExample : MonoBehaviour
 {
     [SerializeField] RhythmTempo beatTempo;
+    [SerializeField] private Vector3 weakPoint;
+    public GameData _gameData;
+    [SerializeField] private Sprite UpSprite, DownSprite, LeftSprite, RightSprite;
+    private SpriteRenderer mySR;
 
-    [Header("Smooth Translate Values")]
-    [SerializeField, Range(0f, 2f)] private float MoveTime = 0.25f;
-    [SerializeField] private float SmoothFactor = 1f;
-
-    private bool _canAct = true;
-
-    private void OnEnable()
+    void Start()
     {
-        RhythmSystem.OnBeat += CallSmoothMovement;
-    }
-
-    private void OnDisable()
-    {
-        RhythmSystem.OnBeat -= CallSmoothMovement;
-    }
-
-    private void CallSmoothMovement()
-    {
-        if (!_canAct) return;
-
-        StartCoroutine(SmoothMovement());
-    }
-
-    private IEnumerator SmoothMovement()
-    {
-        _canAct = false;
-
-        Vector3 startPosition = transform.position;
-        Vector3 endPosition = transform.position + Movement();
-
-        float _time = 0f;
-
-        while (_time < beatTempo.GetScaledBeatTime(MoveTime))
+        mySR = GetComponent<SpriteRenderer>();
+        weakPoint = WeakPoint();
+        if(weakPoint == Vector3.up)
         {
-            _time += Time.deltaTime;
-
-            transform.position = Vector3.Lerp(startPosition, endPosition, _time * SmoothFactor);
-
-            yield return null;
+            mySR.sprite = UpSprite;
         }
-
-        transform.position = endPosition;
-
-        _canAct = true;
+        else if (weakPoint == Vector3.down)
+        {
+            mySR.sprite = DownSprite;
+        }
+        else if(weakPoint == Vector3.right)
+        {
+            mySR.sprite = RightSprite;
+        }
+        else if (weakPoint == Vector3.left)
+        {
+            mySR.sprite = LeftSprite;
+        }
     }
-
-    private Vector3 Movement()
+    void Update()
+    {
+        if(weakPoint == _gameData.PlayerDirection)
+        {
+            Destroy(this.gameObject);
+            _gameData.EnemyQuant--;
+        }
+    }
+    private Vector3 WeakPoint()
     {
         Direction randomDirection = (Direction)Random.Range(0, 4);
 
@@ -71,5 +58,10 @@ public class EnemyExample : MonoBehaviour
         }
 
         return Vector3.zero;
+    }
+    void OnCollisionEnter(Collision collision)
+    {
+        Destroy(gameObject);
+        _gameData.EnemyQuant--;
     }
 }
