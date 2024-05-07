@@ -72,4 +72,11 @@ public class EnemyExample : MonoBehaviour
 
         return Vector3.zero;
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            Destroy(this);
+        }
+    }
 }
