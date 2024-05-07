@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55376e3bcd0d8a640b32f7036c73a24c, type: 3}
   m_Name: TempoLeft
   m_EditorClassIdentifier: 
-  beatTime: 1.8
+  beatTime: 0.6
